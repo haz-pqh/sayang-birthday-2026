@@ -79,6 +79,10 @@
 </head>
 <body class="bg-gradient-to-br from-rose-950 via-rose-900 to-black text-white min-h-screen relative selection:bg-rose-500 selection:text-white">
 
+    <audio id="bgMusic" autoplay loop>
+        <source src="Kembali Pulang.mp3" type="audio/mpeg">
+    </audio>
+    
     <div class="ocean-container">
         <svg class="wave-svg slow" viewBox="0 0 2400 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0,120 Q600,30 1200,120 T2400,120 L2400,200 L0,200 Z" fill="#fb7185"/>
@@ -113,7 +117,7 @@
 
         <section class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20 reveal">
             
-            <div class="md:col-span-1 bg-rose-900/20 border border-rose-500/20 p-6 rounded-3xl backdrop-blur-md flex flex-col items-center justify-center text-center">
+            <!-- <div class="md:col-span-1 bg-rose-900/20 border border-rose-500/20 p-6 rounded-3xl backdrop-blur-md flex flex-col items-center justify-center text-center">
                 <div class="text-5xl mb-4">🎵</div>
                 <h3 class="serif text-xl font-bold text-rose-100 mb-2">Lagu Kita</h3>
                 <p class="text-rose-200/70 text-sm mb-5">"Lagu ini selalu buat saya teringat pada awak. Tekan butang di bawah untuk pasang lagu."</p>
@@ -127,7 +131,7 @@
                     <span>▶ Pasang Lagu</span>
                 </button>
                 <p class="text-rose-300/50 text-xs mt-3">Romantic Acoustic Guitar</p>
-            </div>
+            </div> -->
 
             <div class="md:col-span-2 bg-rose-900/20 border border-rose-500/20 p-6 rounded-3xl backdrop-blur-md relative overflow-hidden flex flex-col justify-between group">
                 <div class="flex items-center justify-between mb-4">
@@ -207,24 +211,41 @@
         }
         setInterval(createHeart, 150);
 
-        // Music Toggle Logic
-        function togglePlayMusic() {
-            const audio = document.getElementById('loveSong');
-            const btn = document.getElementById('playMusicBtn');
+        // Attempt autoplay on page load and trigger via mobile touch/click fallback if blocked
+        window.addEventListener('DOMContentLoaded', () => {
+            const music = document.getElementById('bgMusic');
             
-            if (audio.paused) {
-                audio.play().then(() => {
-                    btn.innerHTML = '<span>⏸ Hentikan Lagu</span>';
-                    btn.classList.replace('bg-rose-500', 'bg-pink-700');
-                }).catch(error => {
-                    console.log("Gagal memainkan audio:", error);
-                });
-            } else {
-                audio.pause();
-                btn.innerHTML = '<span>▶ Pasang Lagu</span>';
-                btn.classList.replace('bg-pink-700', 'bg-rose-500');
-            }
-        }
+            music.play().catch(() => {
+                const startAudioOnInteraction = () => {
+                    music.play().catch(() => {});
+                    window.removeEventListener('click', startAudioOnInteraction);
+                    window.removeEventListener('touchstart', startAudioOnInteraction);
+                    window.removeEventListener('scroll', startAudioOnInteraction);
+                };
+                window.addEventListener('click', startAudioOnInteraction);
+                window.addEventListener('touchstart', startAudioOnInteraction);
+                window.addEventListener('scroll', startAudioOnInteraction);
+            });
+        });
+        
+        // Music Toggle Logic
+        // function togglePlayMusic() {
+        //     const audio = document.getElementById('loveSong');
+        //     const btn = document.getElementById('playMusicBtn');
+            
+        //     if (audio.paused) {
+        //         audio.play().then(() => {
+        //             btn.innerHTML = '<span>⏸ Hentikan Lagu</span>';
+        //             btn.classList.replace('bg-rose-500', 'bg-pink-700');
+        //         }).catch(error => {
+        //             console.log("Gagal memainkan audio:", error);
+        //         });
+        //     } else {
+        //         audio.pause();
+        //         btn.innerHTML = '<span>▶ Pasang Lagu</span>';
+        //         btn.classList.replace('bg-pink-700', 'bg-rose-500');
+        //     }
+        // }
 
         // Photo Carousel Logic
         let currentIndex = 0;
