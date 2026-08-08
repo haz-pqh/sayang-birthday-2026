@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ms" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Cintaku ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            overflow-x: hidden; 
+            background: linear-gradient(to bottom, #4c0519, #881337, #500724);
+            background-attachment: fixed;
+        }
+        .serif { font-family: 'Playfair Display', serif; }
+        
+        /* Flawless Seamless Inline SVG Wave Animation */
+        .ocean-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 140px;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .wave-svg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            animation: waveAnim 15s linear infinite;
+        }
+        .wave-svg.reverse {
+            animation: waveAnim 10s linear infinite reverse;
+            opacity: 0.75;
+        }
+        .wave-svg.slow {
+            animation: waveAnim 20s linear infinite;
+            opacity: 0.5;
+        }
+        @keyframes waveAnim {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Realistic Raining Animation */
+        @keyframes rainDown {
+            0% { transform: translateY(-10vh) scale(0.6) rotate(0deg); opacity: 0; }
+            15% { opacity: 0.95; }
+            85% { opacity: 0.95; }
+            100% { transform: translateY(105vh) scale(1.3) rotate(360deg); opacity: 0; }
+        }
+        .heart {
+            position: absolute;
+            animation: rainDown linear infinite;
+            top: -10vh;
+            user-select: none;
+            pointer-events: none;
+            will-change: transform, opacity;
+            z-index: 1;
+        }
+
+        /* Smooth Reveal Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Dropdown Card Transitions */
+        .card-dropdown-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in-out;
+        }
+        .dropdown-card.expanded .card-dropdown-content {
+            max-height: 250px;
+            opacity: 1;
+        }
+        .dropdown-card.expanded .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="text-white min-h-screen relative selection:bg-pink-600 selection:text-white">
+
+    <div class="ocean-container">
+        <svg class="wave-svg slow" viewBox="0 0 2400 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,120 Q600,30 1200,120 T2400,120 L2400,200 L0,200 Z" fill="#fb7185"/>
+        </svg>
+        <svg class="wave-svg reverse" viewBox="0 0 2400 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,100 Q600,50 1200,100 T2400,100 L2400,200 L0,200 Z" fill="#f43f5e"/>
+        </svg>
+        <svg class="wave-svg" viewBox="0 0 2400 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,150 Q600,100 1200,150 T2400,150 L2400,200 L0,200 Z" fill="#db2777"/>
+        </svg>
+    </div>
+
+    <div id="hearts-container" class="absolute inset-0 overflow-hidden pointer-events-none z-1" style="position: fixed;"></div>
+
+    <div id="intro-screen" class="fixed inset-0 bg-[#4c0519]/70 backdrop-blur-md z-50 flex flex-col items-center justify-center p-6 text-center transition-all duration-1000 ease-out">
+        <div class="bg-rose-900/40 border border-rose-500/30 p-8 sm:p-12 rounded-3xl shadow-2xl max-w-md w-full backdrop-blur-md transform transition-transform duration-700 hover:scale-[1.02]">
+            <div class="text-pink-400 text-6xl mb-4 animate-bounce">💌</div>
+            <h2 class="serif text-2xl sm:text-3xl font-bold mb-3 text-rose-100">Satu Mesej Rahsia Menanti</h2>
+            <p class="text-rose-200/80 text-sm mb-8 leading-relaxed">Seseorang yang amat menyayangi awak telah menghasilkan laman ini khas untuk hari istimewa awak.</p>
+            <button onclick="openApp()" class="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-medium px-8 py-3.5 rounded-full shadow-lg shadow-rose-600/40 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer w-full text-base">
+                Buka Hadiah Anda ❤️
+            </button>
+        </div>
+    </div>
+
+    <div id="main-content" class="opacity-0 transition-opacity duration-1000 ease-out relative z-10 hidden">
+        
+        <header class="min-h-screen flex flex-col items-center justify-center text-center px-4 py-20 relative">
+            <span class="text-pink-300 tracking-widest uppercase text-xs sm:text-sm mb-4 font-semibold animate-pulse">Selamat Hari Jadi Kepada Belahan Jiwaku</span>
+            <h1 class="serif text-5xl sm:text-7xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-rose-200 via-pink-100 to-rose-300">
+                Afiqah Huda
+            </h1>
+            <p class="max-w-xl text-rose-50 text-base sm:text-lg leading-relaxed mb-12 font-light">
+                Awak adalah fikiran kegemaran saya setiap pagi, ketenangan di malam hari, dan bahagian paling indah dalam seluruh wujud saya.
+            </p>
+            <a href="#kisah-kita" class="text-pink-300 text-sm tracking-wider flex flex-col items-center gap-2 hover:text-white transition-colors">
+                <span>Tatal untuk kisah kita</span>
+                <span class="animate-bounce text-xl">↓</span>
+            </a>
+        </header>
+
+        <!-- <section id="kisah-kita" class="py-24 px-4 max-w-3xl mx-auto reveal">
+            <h2 class="serif text-3xl sm:text-4xl font-bold text-center mb-16 text-rose-100">Bagaimana Kita Bermula</h2>
+            <div class="border-l-2 border-rose-500/30 pl-6 ml-4 sm:ml-28 space-y-16">
+                <div class="relative group">
+                    <div class="absolute -left-[31px] top-0 w-4 h-4 bg-rose-500 rounded-full border-4 border-[#500724] group-hover:scale-125 transition-transform duration-300"></div>
+                    <span class="text-pink-300 text-xs font-bold tracking-widest uppercase">Bab Pertama</span>
+                    <h3 class="serif text-xl font-semibold text-white mt-1">Hari Pertama Kita Berjumpa</h3>
+                    <p class="text-rose-100/70 text-sm mt-2 leading-relaxed font-light">Saat jalan kita bersilang, dunia saya berubah secara senyap. Hati saya langsung tahu bahawa awak akan mengubah segalanya.</p>
+                </div>
+                <div class="relative group">
+                    <div class="absolute -left-[31px] top-0 w-4 h-4 bg-rose-500 rounded-full border-4 border-[#500724] group-hover:scale-125 transition-transform duration-300"></div>
+                    <span class="text-pink-300 text-xs font-bold tracking-widest uppercase">Bab Kedua</span>
+                    <h3 class="serif text-xl font-semibold text-white mt-1">Jatuh Cinta Padamu</h3>
+                    <p class="text-rose-100/70 text-sm mt-2 leading-relaxed font-light">Ia bukan berlaku dalam satu malam—tetapi melalui jutaan momen kecil. Ketawa awak, budi bahasa awak, dan cara awak memandang saya.</p>
+                </div>
+                <div class="relative group">
+                    <div class="absolute -left-[31px] top-0 w-4 h-4 bg-rose-500 rounded-full border-4 border-[#500724] group-hover:scale-125 transition-transform duration-300"></div>
+                    <span class="text-pink-300 text-xs font-bold tracking-widest uppercase">Hari Ini & Selamanya</span>
+                    <h3 class="serif text-xl font-semibold text-white mt-1">Meraikan Lahirnya Awak</h3>
+                    <p class="text-rose-100/70 text-sm mt-2 leading-relaxed font-light">Hari ini kita meraikan hari lahirnya seorang insan yang sangat luar biasa. Saya amat bertuah kerana memiliki hati awak.</p>
+                </div>
+            </div>
+        </section> -->
+
+        <section id="kisah-kita" class="py-24 px-4 max-w-4xl mx-auto reveal" style="min-height: 100vh;">
+            <h2 class="serif text-3xl sm:text-4xl font-bold text-center mb-6 text-rose-100">Sebab Awak Membuatkan Saya Terharu</h2>
+            <p class="text-center text-pink-200/70 text-sm mb-14 font-light">Tekan pada setiap kad di bawah untuk membaca luahan hati saya 💌</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div onclick="toggleCard(this)" class="dropdown-card cursor-pointer bg-rose-900/30 border border-rose-500/30 p-8 rounded-3xl backdrop-blur-md hover:border-rose-500/60 hover:bg-rose-900/50 transition-all duration-300 select-none transform hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-4xl">🌹</span>
+                        <span class="dropdown-arrow text-pink-300 text-sm transition-transform duration-300">▼</span>
+                    </div>
+                    <h3 class="serif font-semibold text-lg text-white mb-2">Awak Menerima Seadanya</h3>
+                    <div class="card-dropdown-content">
+                        <p class="text-rose-100/80 text-sm leading-relaxed pt-3 border-t border-rose-500/20 font-light">Bersama awak, saya tidak perlu berlakon. Awak mencintai kekurangan saya dan meraikan setiap kejayaan kecil saya.</p>
+                    </div>
+                </div>
+
+                <div onclick="toggleCard(this)" class="dropdown-card cursor-pointer bg-rose-900/30 border border-rose-500/30 p-8 rounded-3xl backdrop-blur-md hover:border-rose-500/60 hover:bg-rose-900/50 transition-all duration-300 select-none transform hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-4xl">✨</span>
+                        <span class="dropdown-arrow text-pink-300 text-sm transition-transform duration-300">▼</span>
+                    </div>
+                    <h3 class="serif font-semibold text-lg text-white mb-2">Rumah Adalah Awak</h3>
+                    <div class="card-dropdown-content">
+                        <p class="text-rose-100/80 text-sm leading-relaxed pt-3 border-t border-rose-500/20 font-light">Tidak kira betapa penatnya dunia luar, satu pelukan atau mesej daripada awak membuatkan segalanya tenang dan selamat.</p>
+                    </div>
+                </div>
+
+                <div onclick="toggleCard(this)" class="dropdown-card cursor-pointer bg-rose-900/30 border border-rose-500/30 p-8 rounded-3xl backdrop-blur-md hover:border-rose-500/60 hover:bg-rose-900/50 transition-all duration-300 select-none transform hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-4xl">💫</span>
+                        <span class="dropdown-arrow text-pink-300 text-sm transition-transform duration-300">▼</span>
+                    </div>
+                    <h3 class="serif font-semibold text-lg text-white mb-2">Masa Depan Bersama</h3>
+                    <div class="card-dropdown-content">
+                        <p class="text-rose-100/80 text-sm leading-relaxed pt-3 border-t border-rose-500/20 font-light">Setiap impian saya untuk hari esok sentiasa melibatkan tangan awak yang dipegang erat dalam genggaman saya.</p>
+                    </div>
+                </div>
+            </div>
+            <a href="#secret-messege" class="text-pink-300 text-sm tracking-wider flex flex-col items-center gap-2 hover:text-white transition-colors" style="margin-top: 50px;">
+                <span>Tatal untuk kisah kita</span>
+                <span class="animate-bounce text-xl">↓</span>
+            </a>
+        </section>
+
+        <section id="secret-messege" class="py-24 px-4 max-w-3xl mx-auto reveal">
+            <div class="bg-gradient-to-b from-rose-900/40 to-rose-950/90 border border-rose-500/30 p-8 sm:p-14 rounded-3xl shadow-2xl backdrop-blur-md relative overflow-hidden">
+                <div class="absolute top-2 right-4 p-8 text-pink-500/10 text-9xl serif pointer-events-none">“</div>
+                <h2 class="serif text-2xl sm:text-3xl font-bold text-rose-100 mb-8 text-center">My Dearest Afiqah Huda,</h2>
+                
+                <div class="space-y-6 text-rose-50 leading-relaxed text-base sm:text-lg font-light">
+                    <p>If you are reading this, I hope you can feel how much love poured into every single pixel of this page. You deserve a celebration that matches the magnitude of what you mean to me, even if words can never fully capture it.</p>
+                    <p>Thank you for walking into my life and turning ordinary days into poetry. Thank you for loving me so gently, so fiercely, and so truly. On your birthday, my only wish is that you realize how profoundly precious you are—not just to me, but to everyone blessed enough to know your heart.</p>
+                    <p class="pt-6 font-medium text-pink-200">I love you yesterday, I love you still, I always have, and I always will.<br><br><span class="serif font-normal text-rose-200 text-base">[Hazril]</span></p>
+                </div>
+
+                <a href="kenangan.html" class="inline-block bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white font-semibold px-8 py-3.5 rounded-full shadow-xl shadow-rose-600/40 transition-all duration-300 transform hover:scale-105" style="margin-top: 30px;">
+                    Buka Kenangan Kita 🎁 →
+                </a>
+            </div>
+        </section>
+
+        <!-- <section class="py-10 text-center reveal">
+            <a href="kenangan.html" class="inline-block bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white font-semibold px-8 py-3.5 rounded-full shadow-xl shadow-rose-600/40 transition-all duration-300 transform hover:scale-105">
+                Buka Kenangan Kita 🎁 →
+            </a>
+        </section> -->
+
+        <footer class="text-center py-12 text-rose-300/40 text-xs tracking-widest uppercase pb-24">
+            CREATED WITH ALL MY LOVE ❤️
+        </footer>
+
+    </div>
+
+    <script>
+        function createHeart() {
+            const container = document.getElementById('hearts-container');
+            if (!container) return;
+            const item = document.createElement('div');
+            item.classList.add('heart');
+            
+            const svgs = [
+                `<svg class="drop-shadow-[0_0_8px_rgba(244,63,94,0.8)]" width="26" height="26" viewBox="0 0 24 24" fill="#f43f5e"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+                `<svg class="drop-shadow-[0_0_8px_rgba(251,113,133,0.9)]" width="22" height="22" viewBox="0 0 24 24" fill="#fb7185"><path d="M12 0l3.09 6.26L22 7.27l-5 4.87 1.18 6.88L12 15.77l-6.18 3.25L7 12.14 2 7.27l6.91-1.01L12 0z"/></svg>`,
+                `<svg class="drop-shadow-[0_0_8px_rgba(253,164,175,0.7)]" width="20" height="20" viewBox="0 0 24 24" fill="#fda4af"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`
+            ];
+
+            item.innerHTML = svgs[Math.floor(Math.random() * svgs.length)];
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            
+            container.appendChild(item);
+            setTimeout(() => { item.remove(); }, 7000);
+        }
+        setInterval(createHeart, 100);
+
+        function openApp() {
+            const intro = document.getElementById('intro-screen');
+            const main = document.getElementById('main-content');
+            
+            intro.style.opacity = '0';
+            setTimeout(() => {
+                intro.style.display = 'none';
+                main.classList.remove('hidden');
+                setTimeout(() => { main.style.opacity = '1'; }, 50);
+            }, 800);
+
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.5 },
+                colors: ['#f43f5e', '#fb7185', '#fda4af', '#ffffff']
+            });
+        }
+
+        function toggleCard(card) {
+            card.classList.toggle('expanded');
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+            }, 300);
+        });
+    </script>
+</body>
+</html>
