@@ -289,6 +289,13 @@
         }, { threshold: 0.15 });
 
         document.addEventListener("DOMContentLoaded", () => {
+            const music = document.getElementById('bgMusic');
+
+            // Ensure music plays when opening the app screen
+            music.play().catch(error => {
+                console.log("Audio play error:", error);
+            });
+            
             setTimeout(() => {
                 document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
             }, 300);
